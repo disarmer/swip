@@ -6,8 +6,23 @@ use Date::Parse;
 
 $0=~m#(.*)/.*?#;
 my $root=$1;
-our ($dbh,$cwd,$quality,$gentle);
+our ($dbh,$cwd,$quality,$gentle,$version);
 
+
+sub url_encode{
+	local @_=@_;
+	map{ s/([^A-Za-z0-9\-])/sprintf("%%%02X", ord($1))/seg;} @_;
+	return wantarray?@_:join("\n",@_);
+}
+sub html_entity{
+	local @_=@_;
+	map{
+		$_='' unless defined $_;
+		@{$_}=&html_entity(@{$_}) if ref $_;
+		s/&/&amp;/g;s/"/&quot;/g;s/</&lt;/g;s/>/&gt;/g;s/'/&#39;/g
+	} @_;
+	return wantarray?@_:join("\n",@_);
+}
 sub sort_by_length{
 	my @arr;
 	for(sort{length(decode_utf8($_[$a])) <=> length(decode_utf8($_[$b]))} 0..$#_){
@@ -36,23 +51,27 @@ sub html_write{
 	$num_per_page||=20;
 	my @images_for_html=@$ref;
 	@images_for_html=grep{! m#/thumbs/#}sort @images_for_html;
-	if(scalar @images_for_html<1){return;}
+	if(scalar @images_for_html<1){return}
 
-	my $html_head_str="<!DOCTYPE html><html xmlns='http://www.w3.org/1999/xhtml' xml:lang='ru' lang='ru'>
+	$_=$html_album_desc;s/'/&#39;/g;
+	$html_album_desc=&html_entity($html_album_desc);
+
+	my $html_head_str="<!DOCTYPE html><html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
 	<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-	<title>disarmer.ru | photo | $html_album_desc</title>
-	<meta name='description' content='disarmer.ru | фотоальбомы | $html_album_desc'/>
-	<meta name='keywords' content='фотографии, фотки, фотогалерея'/>
+	<title>$html_album_desc</title>
+	<meta name='description' content='$_'/>
+	<meta name='generator' content='swip v$version'/>
+	<meta name='keywords' content='foto, photo, gallery, photos, images'/>
 	<link rel='icon' href='/favicon.ico' type='image/x-icon'/>
-	<script type='text/javascript' src='/js/iLoad/.iLoad.js'></script>
+	<script type='text/javascript' src='/js/iLoad/iLoad.js'></script>
 	<style type='text/css'>
-		html{background:url(/img/film.png) 100% 0 repeat-y,url(/img/film.png) 0 0 repeat-y;background-color:#000;}body{padding:0 80px;text-align:center;}a img{width:150px;height:150px;margin-bottom:30px}#photos img{width:90%;margin:2em 0}div#nav{position:fixed;bottom:0;right:0;margin:0;padding:6px 20px 6px 20px;background-color:#fff;border-top:1px solid #000;border-left:1px solid #000;border-radius:20px;-moz-border-radius:20px;-webkit-borderd-radius:20px;}div#nav a{float:left;background-color:#ccc;padding:0 10px;margin:0 7px;border:1px solid #000;text-decoration:none;font-weight:bold;}div#nav a:hover{background-color:#cc0;}
+		html{background:url(/js/iLoad/film.png) 100% 0 repeat-y,url(/js/iLoad/film.png) 0 0 repeat-y;background-color:#000;}body{padding:0 80px;text-align:center;}a img{margin-bottom:30px}#photos img{width:90%;margin:2em 0}div#nav{position:fixed;bottom:0;right:0;margin:0;padding:6px 20px 6px 20px;background-color:#fff;border-top:1px solid #000;border-left:1px solid #000;border-radius:20px;-moz-border-radius:20px;-webkit-borderd-radius:20px;}div#nav a{float:left;background-color:#ccc;padding:0 10px;margin:0 7px;border:1px solid #000;text-decoration:none;font-weight:bold;}div#nav a:hover{background-color:#cc0;}
 	</style>
 </head><body>";
 	for(my $file_num=1;$file_num<1+($#images_for_html+1)/$num_per_page;$file_num++){
 		my $fileout="$file_num.html";
-		print "Запись в файл: $fileout\n";
+		print "Writing to file: $fileout\n";
 		unlink($fileout);
 		my $out=$html_head_str."<div id='nav'>";
 		for(my $menu_num=1;$menu_num<1+($#images_for_html+1)/$num_per_page;$menu_num++){
@@ -62,7 +81,8 @@ sub html_write{
 		for my $href_num(0..$num_per_page-1){
 			my $href=$images_for_html[$href_num+($file_num-1)*$num_per_page]||last;
 			$href=~s/\Q$cwd\E//;
-			$out.="<img alt='фото' src='$href' onclick='this.style=\"display:none\";'/>";
+			$href=&url_encode($href);
+			$out.="<img alt='photo' src='$href' onclick='this.style=\"display:none\";'/>";
 		}
 		$out.="</div></body></html>";
 		&str_to_file($fileout,$out);
@@ -74,8 +94,9 @@ sub html_write{
 		$href=~s/\Q$cwd\E//;
 		my $thumb=$href;
 		$thumb=~s#(.*)/(.*)#$1/thumbs/$2# or $thumb="thumbs/$thumb";
-		$out.="<a href='$href' rel='iLoad|ph'><img alt='фото' src='$thumb.png'/></a>";
-        }
+		($href,$thumb)=&url_encode($href,$thumb);
+		$out.="<a href='$href' rel='iLoad|ph'><img alt='photo' src='$thumb.thumb'/></a>";
+	}
 	$out.="</div></body></html>";
 	$out=~tr/\n\t\r//d;
 	&str_to_file('index.html',$out);
@@ -83,9 +104,9 @@ sub html_write{
 sub binn{
 	my $source=shift;
 	my $dest=$source;
-	my $bin_size=shift||2;	
+	my $bin_size=shift||2;
 	&report("Bin-factor: $bin_size",4);
-	
+
 	my ($image,$width,$height)=&load_image($source);
 	my $crop_flag=0;
 	my $new_width=int($width/$bin_size);
@@ -112,10 +133,10 @@ sub resize{
 	my $source=shift;
 	my $dest=$source;
 	my $target_size=shift||1600;
-	
+
 	&report("resize. размер: $target_size",4);
 	my ($image,$width,$height)=&load_image($source);
-	
+
 	if($gentle){
 		if($target_size=~m/%/){
 		}elsif($target_size>=$width&&$target_size>=$height){
@@ -130,15 +151,17 @@ sub resize{
 sub thumb{
 	my $source=shift;
 	my $dest=$source;
+	return if $source=~m#/thumbs/#;
 	$dest=~s#(.*)/(.*)#$1/thumbs/$2#;
+	$dest.='.thumb';
 	mkpath("$1/thumbs/", 0755);
-	
+
 	my $square=shift||0;
 	my $target_size=shift||150;
-	
+
 	&report("thumb size: $target_size $dest $square",4);
 	my ($image,$width,$height)=&load_image($source);
-	my $bg=$image->clone();	
+	my $bg=$image->clone();
 	my $min_geom=$width>$height?$height:$width; #minimal
 	if($width>$height){
 		$bg->Crop('x'=>($width-$min_geom)/2, 'y'=>0);
@@ -148,7 +171,7 @@ sub thumb{
 		$bg->Crop($min_geom."x".($min_geom+($height-$min_geom)/2));
 	}
 	$bg->Resize('geometry'=>$target_size."x".$target_size);
-	
+
 	if($square){
 		if($square==2){
 			my $empty=Image::Magick->new('size'=>$target_size);
@@ -165,9 +188,14 @@ sub thumb{
 		$bg->Blur('radius'=>6,'sigma'=>7);
 		$bg->Composite('image'=> $image, 'compose'=>"Over", 'gravity'=>"Center");
 	}
-	$bg->Set('compression'=>'LZW' ,'quality'=>$quality, 'colors'=>5);
-	$bg->Write("$dest.png");
-	&erase_exif($dest);
+	$bg->Set('compression'=>'LZW' ,'quality'=>$quality);
+
+	if($square==2){
+		$bg->Write("png:$dest");
+	}else{
+		$bg->Write("jpg:$dest");
+		&erase_exif($dest);
+	}
 }
 sub erase_exif{
 	my $source=shift;
@@ -185,7 +213,7 @@ sub sign{	#Качество Масштаб_надписи Прозрачност
 	my $color=shift||"ffffff";
 	$color="#$color" unless $color=~m/#/;
 	my $angle=shift||270;
-	
+
 	#if($#_+1){$angle=shift}else{$angle=270}
 	while($angle<0){
 		$angle+=360;
@@ -205,20 +233,20 @@ sub sign{	#Качество Масштаб_надписи Прозрачност
 
 	my $label=Image::Magick->new('size'=>&get_font_geometry($pointsize,$font,$string));
 	$label->Read('xc:transparent');
-	$label->Annotate('x'=>0,'y'=>-$pointsize/7, 'fill'=>$color, 'font'=>$font, 'pointsize'=>$pointsize, 'gravity'=>"SouthWest",  'text'=>"$string", 'kerning'=>$kerning,'antialias'=>'true');
+	$label->Annotate('x'=>0,'y'=>-$pointsize/7, 'fill'=>$color, 'font'=>$font, 'pointsize'=>$pointsize, 'gravity'=>"SouthWest", 'text'=>"$string", 'kerning'=>$kerning,'antialias'=>'true');
 
 	my $shadow=new Image::Magick();
 	$shadow=$label->Clone();
 	$shadow->Shadow('geometry'=>'100x3+0+0');#, 'x'=>integer, 'y'=>integer);
-	
+
 	$shadow->Negate();
 	$shadow->Composite('image'=> $label, 'compose'=>"Blend", 'gravity'=>"Center");
 	$label=$shadow;
 	undef $shadow;
-	
+
 	$label->Rotate('degrees'=> $angle,'background'=>'transparent');
 	$image->Composite('image'=>$label,'gravity'=>"SouthEast",'x'=>0,'y'=>$pointsize/2, 'compose'=>'dissolve', 'tile'=>"False");
-	
+
 	$image->Set('quality'=>$quality);
 	$image->Write($dest);
 	undef $image;
@@ -229,7 +257,7 @@ sub get_font_geometry{#Тогда можно через QueryFontMetrics узн�
 	my $string=shift;
 	my ($width,$height,$x_ppem, $y_ppem, $ascender, $descender, $max_advance, $predict);
 	my $image=new Image::Magick;
-	
+
 	my $num_rows=1;
 	if($string=~m/\\n/){
 		my @arr=split("\\\\n", "$string");
@@ -239,7 +267,7 @@ sub get_font_geometry{#Тогда можно через QueryFontMetrics узн�
 		}
 		($string)=@arr;
 	}
-	
+
 	$image->Set('size'=>"300x500", 'pointsize'=>$pointsize, 'font'=>$font, 'antialias'=>'true', 'density'=>"50x50");
 	$image->Read('xc:none');
 	($x_ppem, $y_ppem, $ascender, $descender, $width, $height, $max_advance)=$image->QueryFontMetrics('text'=>$string);
@@ -299,7 +327,7 @@ sub index{
 	$model=substr $model,0,20;
 
 	my (undef,$size_x,$size_y)=&load_image($file)||warn "$file have wrong format!"&&return;
-	
+
 	my $md5=md5_hex($file);
 	my $filesize=-s "$file";
 	#my @stat=stat($file);
