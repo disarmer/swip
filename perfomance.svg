@@ -135,6 +135,34 @@
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
          transform="scale(0.8) translate(12.5,0)" />
     </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart-1"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3756-9"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend-6"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3777-3"
+         style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -144,11 +172,11 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
-     inkscape:cx="81.475163"
-     inkscape:cy="55.696745"
+     inkscape:cx="100.40626"
+     inkscape:cy="88.979388"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="false"
+     showgrid="true"
      inkscape:window-width="1680"
      inkscape:window-height="995"
      inkscape:window-x="0"
@@ -172,18 +200,17 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="grid"
-     sodipodi:insensitive="true">
+     inkscape:label="grid">
     <path
        style="fill:#808080;stroke:#808080;stroke-width:0.30000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 10,0 0,120"
+       d="m 10,-40 0,160"
        id="path6538"
        inkscape:connector-curvature="0"
        inkscape:tile-cx="10"
@@ -443,6 +470,410 @@
        style="fill:#ff0000;stroke:#ff0000"
        width="160"
        height="120" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lstart);marker-mid:none;marker-end:url(#Arrow2Lend)"
+       d="m -0.10451465,-53.340278 0,173.493748 165.66501465,0"
+       id="path2983"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text6718"
+       y="125.51057"
+       x="143.59747"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:center;text-anchor:middle"
+         y="125.51057"
+         x="143.59747"
+         id="tspan6720"
+         sodipodi:role="line">concurrency</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="35.674343"
+       y="-1.5428632"
+       id="text6722"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan6724"
+         x="35.674343"
+         y="-1.5428632"
+         style="font-size:6px;text-align:center;text-anchor:middle">time, s</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="9.7755728"
+       y="125.51057"
+       id="text6726"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6728"
+         x="9.7755728"
+         y="125.51057"
+         style="font-size:6px;text-align:center;text-anchor:middle">1</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6730"
+       y="125.51057"
+       x="19.687689"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:center;text-anchor:middle"
+         y="125.51057"
+         x="19.687689"
+         id="tspan6732"
+         sodipodi:role="line">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="29.662947"
+       y="125.51057"
+       id="text6734"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6736"
+         x="29.662947"
+         y="125.51057"
+         style="font-size:6px;text-align:center;text-anchor:middle">3</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6738"
+       y="125.51057"
+       x="39.638203"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:center;text-anchor:middle"
+         y="125.51057"
+         x="39.638203"
+         id="tspan6740"
+         sodipodi:role="line">4</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6742"
+       y="125.51057"
+       x="49.739727"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:center;text-anchor:middle"
+         y="125.51057"
+         x="49.739727"
+         id="tspan6744"
+         sodipodi:role="line">5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="59.651852"
+       y="125.51057"
+       id="text6746"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6748"
+         x="59.651852"
+         y="125.51057"
+         style="font-size:6px;text-align:center;text-anchor:middle">6</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6750"
+       y="125.51057"
+       x="69.627106"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:center;text-anchor:middle"
+         y="125.51057"
+         x="69.627106"
+         id="tspan6752"
+         sodipodi:role="line">7</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="79.602364"
+       y="125.51057"
+       id="text6754"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6756"
+         x="79.602364"
+         y="125.51057"
+         style="font-size:6px;text-align:center;text-anchor:middle">8</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="89.830154"
+       y="125.51057"
+       id="text6758"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6760"
+         x="89.830154"
+         y="125.51057"
+         style="font-size:6px;text-align:center;text-anchor:middle">9</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6762"
+       y="125.51057"
+       x="99.742279"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:center;text-anchor:middle"
+         y="125.51057"
+         x="99.742279"
+         id="tspan6764"
+         sodipodi:role="line">10</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="109.71754"
+       y="125.51057"
+       id="text6766"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6768"
+         x="109.71754"
+         y="125.51057"
+         style="font-size:6px;text-align:center;text-anchor:middle">11</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6770"
+       y="125.51057"
+       x="119.69279"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:center;text-anchor:middle"
+         y="125.51057"
+         x="119.69279"
+         id="tspan6772"
+         sodipodi:role="line">12</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="-0.91216916"
+       y="112.14133"
+       id="text6774"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6776"
+         x="-0.91216916"
+         y="112.14133"
+         style="font-size:6px;text-align:end;text-anchor:end">10</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6778"
+       y="102.10614"
+       x="-0.91216916"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:end;text-anchor:end"
+         y="102.10614"
+         x="-0.91216916"
+         id="tspan6780"
+         sodipodi:role="line">20</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="-0.91216916"
+       y="92.070953"
+       id="text6782"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6784"
+         x="-0.91216916"
+         y="92.070953"
+         style="font-size:6px;text-align:end;text-anchor:end">30</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6802"
+       y="82.035767"
+       x="-0.91216916"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:end;text-anchor:end"
+         y="82.035767"
+         x="-0.91216916"
+         id="tspan6804"
+         sodipodi:role="line">40</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="-0.91216916"
+       y="72.000572"
+       id="text6806"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6808"
+         x="-0.91216916"
+         y="72.000572"
+         style="font-size:6px;text-align:end;text-anchor:end">50</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6810"
+       y="61.965385"
+       x="-0.91216916"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:end;text-anchor:end"
+         y="61.965385"
+         x="-0.91216916"
+         id="tspan6812"
+         sodipodi:role="line">60</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="-0.91216916"
+       y="51.930195"
+       id="text6814"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6816"
+         x="-0.91216916"
+         y="51.930195"
+         style="font-size:6px;text-align:end;text-anchor:end">70</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6818"
+       y="41.895008"
+       x="-0.91216916"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:end;text-anchor:end"
+         y="41.895008"
+         x="-0.91216916"
+         id="tspan6820"
+         sodipodi:role="line">80</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="-0.91216916"
+       y="31.859821"
+       id="text6822"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6824"
+         x="-0.91216916"
+         y="31.859821"
+         style="font-size:6px;text-align:end;text-anchor:end">90</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3922"
+       y="21.824635"
+       x="-0.91216916"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"
+       inkscape:transform-center-x="1.5152288"><tspan
+         style="font-size:6px;text-align:end;text-anchor:end"
+         y="21.824635"
+         x="-0.91216916"
+         id="tspan3924"
+         sodipodi:role="line">100</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3926"
+       y="11.789444"
+       x="-0.91216916"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:end;text-anchor:end"
+         y="11.789444"
+         x="-0.91216916"
+         id="tspan3928"
+         sodipodi:role="line">110</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="-0.91216916"
+       y="1.7542533"
+       id="text3930"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3932"
+         x="-0.91216916"
+         y="1.7542533"
+         style="font-size:6px;text-align:end;text-anchor:end">120</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3934"
+       y="-8.280941"
+       x="-0.91216916"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       xml:space="preserve"><tspan
+         style="font-size:6px;text-align:end;text-anchor:end"
+         y="-8.280941"
+         x="-0.91216916"
+         id="tspan3936"
+         sodipodi:role="line">130</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="-0.91216916"
+       y="-18.316128"
+       id="text3938"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3940"
+         x="-0.91216916"
+         y="-18.316128"
+         style="font-size:6px;text-align:end;text-anchor:end">140</tspan></text>
+    <use
+       height="120"
+       width="160"
+       style="fill:#ff0000;stroke:#ff0000"
+       transform="translate(0.04987,-110)"
+       id="use4213"
+       xlink:href="#path6690"
+       inkscape:tiled-clone-of="#path6690"
+       y="0"
+       x="0" />
+    <use
+       x="0"
+       y="0"
+       inkscape:tiled-clone-of="#path6690"
+       xlink:href="#path6690"
+       id="use4215"
+       transform="translate(0.04987,-120)"
+       style="fill:#ff0000;stroke:#ff0000"
+       width="160"
+       height="120" />
+    <use
+       height="120"
+       width="160"
+       style="fill:#ff0000;stroke:#ff0000"
+       transform="translate(0.04987,-130)"
+       id="use4217"
+       xlink:href="#path6690"
+       inkscape:tiled-clone-of="#path6690"
+       y="0"
+       x="0" />
+    <use
+       x="0"
+       y="0"
+       inkscape:tiled-clone-of="#path6690"
+       xlink:href="#path6690"
+       id="use4219"
+       transform="translate(0.04987,-140)"
+       style="fill:#ff0000;stroke:#ff0000"
+       width="160"
+       height="120" />
+    <use
+       height="120"
+       width="160"
+       style="fill:#ff0000;stroke:#ff0000"
+       transform="translate(0.04987,-150)"
+       id="use4221"
+       xlink:href="#path6690"
+       inkscape:tiled-clone-of="#path6690"
+       y="0"
+       x="0" />
+    <use
+       height="120"
+       width="160"
+       style="fill:#ff0000;stroke:#ff0000"
+       transform="translate(150,0)"
+       id="use4223"
+       xlink:href="#path6538"
+       inkscape:tiled-clone-of="#path6538"
+       y="0"
+       x="0" />
   </g>
   <g
      inkscape:label="Layer 1"
@@ -451,303 +882,77 @@
      transform="translate(0,-932.36218)">
     <path
        style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 0,994.65918 10,-56.831 10,-0.357 10,22.256 10,31.856 10,0.498 10.000003,-14.884 10,16.928 10,0.223 10,-0.342 9.999997,0.065 10,-0.033 10,-1.015 10,0.307 10,0.346 10,-0.079 10,-1.394"
-       id="path2985"
+       d="m 0,994.65918 10,-56.831 10,-0.357 10,22.256 10,31.856 10,0.498 10.0,-14.884 10,16.928 10,0.223 10,-0.342 10,0.065 10,-0.033 10,-1.015 10,0.307 10,0.346 10,-0.079 10,-1.394"
+       id="path_typical"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccccccccccc" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Lstart);marker-mid:none;marker-end:url(#Arrow2Lend)"
-       d="m 0.11992372,928.36599 0,124.24881 165.66501628,0"
-       id="path2983"
-       inkscape:connector-curvature="0" />
+       sodipodi:nodetypes="ccccccccccccccccc"
+       inkscape:label="#path2985" />
     <text
        xml:space="preserve"
        style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
        x="14.285714"
-       y="929.50507"
+       y="883.79565"
        id="text6714"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan6716"
          x="14.285714"
-         y="929.50507"
+         y="883.79565"
          style="font-size:10px">swip 0.1 concurrency relation</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text6718"
-       y="1057.7194"
-       x="143.82191"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       xml:space="preserve"><tspan
-         style="font-size:6px;text-align:center;text-anchor:middle"
-         y="1057.7194"
-         x="143.82191"
-         id="tspan6720"
-         sodipodi:role="line">concurrency</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="-946.03192"
-       y="-1.3184266"
-       id="text6722"
-       sodipodi:linespacing="125%"
-       transform="matrix(0,-1,1,0,0,0)"><tspan
-         sodipodi:role="line"
-         id="tspan6724"
-         x="-946.03192"
-         y="-1.3184266"
-         style="font-size:6px;text-align:center;text-anchor:middle">time, s</tspan></text>
+    <path
+       sodipodi:nodetypes="ccccccccccccccccc"
+       inkscape:connector-curvature="0"
+       id="path_histogram"
+       d="m 0,888.98418 10,28.949 10,8.042 10,60.083 10,16.06402 10,6.443 10,0.459 10,4.785 10,-3.173 10,-1.603 10,-0.116 10,0.784 10,-0.318 10,0.396 10,-0.062 10,0.659 10,-1.92"
+       style="fill:none;stroke:#0000ff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:label="#path3080" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ff0000;fill-opacity:1;stroke:none"
+       id="path3082"
+       sodipodi:cx="-22.475893"
+       sodipodi:cy="14.944136"
+       sodipodi:rx="10.101525"
+       sodipodi:ry="10.101525"
+       d="m -22.475893,25.045661 c -5.578918,0 -10.101525,-4.522607 -10.101525,-10.101525 0,0 0,-1e-6 0,-1e-6 l 10.101525,1e-6 z"
+       transform="matrix(-0.62500001,0,0,0.62500001,150.35489,925.08679)"
+       sodipodi:start="1.5707963"
+       sodipodi:end="3.1415927" />
     <text
        xml:space="preserve"
        style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="10.00001"
-       y="1057.7194"
-       id="text6726"
+       x="172.35873"
+       y="939.53156"
+       id="text3912"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan6728"
-         x="10.00001"
-         y="1057.7194"
-         style="font-size:6px;text-align:center;text-anchor:middle">1</tspan></text>
+         id="tspan3914"
+         x="172.35873"
+         y="939.53156"
+         style="font-size:6px;text-align:start;text-anchor:start">typical using</tspan></text>
+    <path
+       sodipodi:end="3.1415927"
+       sodipodi:start="1.5707963"
+       transform="matrix(-0.62500001,0,0,0.62500001,150.35489,933.67309)"
+       d="m -22.475893,25.045661 c -5.578918,0 -10.101525,-4.522607 -10.101525,-10.101525 0,0 0,-1e-6 0,-1e-6 l 10.101525,1e-6 z"
+       sodipodi:ry="10.101525"
+       sodipodi:rx="10.101525"
+       sodipodi:cy="14.944136"
+       sodipodi:cx="-22.475893"
+       id="path3916"
+       style="fill:#0000ff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc" />
     <text
        sodipodi:linespacing="125%"
-       id="text6730"
-       y="1057.7194"
-       x="19.912132"
+       id="text3918"
+       y="948.11786"
+       x="172.35873"
        style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
        xml:space="preserve"><tspan
-         style="font-size:6px;text-align:center;text-anchor:middle"
-         y="1057.7194"
-         x="19.912132"
-         id="tspan6732"
-         sodipodi:role="line">2</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="29.887388"
-       y="1057.7194"
-       id="text6734"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan6736"
-         x="29.887388"
-         y="1057.7194"
-         style="font-size:6px;text-align:center;text-anchor:middle">3</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text6738"
-       y="1057.7194"
-       x="39.862644"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       xml:space="preserve"><tspan
-         style="font-size:6px;text-align:center;text-anchor:middle"
-         y="1057.7194"
-         x="39.862644"
-         id="tspan6740"
-         sodipodi:role="line">4</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text6742"
-       y="1057.7194"
-       x="49.964169"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       xml:space="preserve"><tspan
-         style="font-size:6px;text-align:center;text-anchor:middle"
-         y="1057.7194"
-         x="49.964169"
-         id="tspan6744"
-         sodipodi:role="line">5</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="59.876293"
-       y="1057.7194"
-       id="text6746"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan6748"
-         x="59.876293"
-         y="1057.7194"
-         style="font-size:6px;text-align:center;text-anchor:middle">6</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text6750"
-       y="1057.7194"
-       x="69.851547"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       xml:space="preserve"><tspan
-         style="font-size:6px;text-align:center;text-anchor:middle"
-         y="1057.7194"
-         x="69.851547"
-         id="tspan6752"
-         sodipodi:role="line">7</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="79.826805"
-       y="1057.7194"
-       id="text6754"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan6756"
-         x="79.826805"
-         y="1057.7194"
-         style="font-size:6px;text-align:center;text-anchor:middle">8</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="90.054596"
-       y="1057.7194"
-       id="text6758"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan6760"
-         x="90.054596"
-         y="1057.7194"
-         style="font-size:6px;text-align:center;text-anchor:middle">9</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text6762"
-       y="1057.7194"
-       x="99.966721"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       xml:space="preserve"><tspan
-         style="font-size:6px;text-align:center;text-anchor:middle"
-         y="1057.7194"
-         x="99.966721"
-         id="tspan6764"
-         sodipodi:role="line">10</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="109.94198"
-       y="1057.7194"
-       id="text6766"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan6768"
-         x="109.94198"
-         y="1057.7194"
-         style="font-size:6px;text-align:center;text-anchor:middle">11</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text6770"
-       y="1057.7194"
-       x="119.91724"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       xml:space="preserve"><tspan
-         style="font-size:6px;text-align:center;text-anchor:middle"
-         y="1057.7194"
-         x="119.91724"
-         id="tspan6772"
-         sodipodi:role="line">12</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="-0.43519002"
-       y="1044.6027"
-       id="text6774"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan6776"
-         x="-0.43519002"
-         y="1044.6027"
-         style="font-size:6px;text-align:end;text-anchor:end">10</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text6778"
-       y="1034.6202"
-       x="-0.43519002"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       xml:space="preserve"><tspan
-         style="font-size:6px;text-align:end;text-anchor:end"
-         y="1034.6202"
-         x="-0.43519002"
-         id="tspan6780"
-         sodipodi:role="line">20</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="-0.43519002"
-       y="1024.6378"
-       id="text6782"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan6784"
-         x="-0.43519002"
-         y="1024.6378"
-         style="font-size:6px;text-align:end;text-anchor:end">30</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text6802"
-       y="1014.6554"
-       x="-0.43519002"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       xml:space="preserve"><tspan
-         style="font-size:6px;text-align:end;text-anchor:end"
-         y="1014.6554"
-         x="-0.43519002"
-         id="tspan6804"
-         sodipodi:role="line">40</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="-0.43519002"
-       y="1004.673"
-       id="text6806"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan6808"
-         x="-0.43519002"
-         y="1004.673"
-         style="font-size:6px;text-align:end;text-anchor:end">50</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text6810"
-       y="994.69061"
-       x="-0.43519002"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       xml:space="preserve"><tspan
-         style="font-size:6px;text-align:end;text-anchor:end"
-         y="994.69061"
-         x="-0.43519002"
-         id="tspan6812"
-         sodipodi:role="line">60</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="-0.43519002"
-       y="984.70819"
-       id="text6814"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan6816"
-         x="-0.43519002"
-         y="984.70819"
-         style="font-size:6px;text-align:end;text-anchor:end">70</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text6818"
-       y="974.72577"
-       x="-0.43519002"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       xml:space="preserve"><tspan
-         style="font-size:6px;text-align:end;text-anchor:end"
-         y="974.72577"
-         x="-0.43519002"
-         id="tspan6820"
-         sodipodi:role="line">80</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="-0.43519002"
-       y="964.74335"
-       id="text6822"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan6824"
-         x="-0.43519002"
-         y="964.74335"
-         style="font-size:6px;text-align:end;text-anchor:end">90</tspan></text>
+         style="font-size:6px;text-align:start;text-anchor:start"
+         y="948.11786"
+         x="172.35873"
+         id="tspan3920"
+         sodipodi:role="line">building histograms</tspan></text>
   </g>
 </svg>

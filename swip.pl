@@ -163,35 +163,38 @@ sub sig_child{
 __END__
 SWIP - simple web image processor
 	Valid arguments:
-	-q, --quality
+	-q,  --quality
 		Output jpeg quality(1-100), default 92
 
-	-b, --binn	FACTOR
+	-b,  --binn	FACTOR
 		reduce images multiple value of FACTOR with box filter
 
-	-r, --resize	SIZE
+	-r,  --resize	SIZE
 		resize every image to fit SIZE
 
-	-t, --thumb	SQUARE	SIZE
+	-t,  --thumb	SQUARE	SIZE
 		make thumbnails of images
 
-	-e, --erase_exif
+	-e,  --erase_exif
 		erase EXIF info from all images, reducing their size
 
-	-h, --html	NAME	IMAGES_PER_PAGE
+	-h,  --html	NAME	IMAGES_PER_PAGE
 		write html pages for images with defined album name
 
-	-s, --sign	TEXT SIZE COLOR ANGLE
+	-hi, --histogram
+		get and build hystogram for every image
+
+	-s,  --sign	TEXT SIZE COLOR ANGLE
 		add watermark to images
 
-	-f, --filter	+-SIZE
+	-f,  --filter	+-SIZE
 		use only images that FILESIZE greater(+) or lower(-) kB
 
-	-i, --index
+	-i,  --index
 		index every image info and write result in SQL database
 
-	-c, --concurrent	NUM
+	-c,  --concurrent	NUM
 		number of concurrent worker processes, default is auto beetwen 1 and 12
 
-	-g, --gentle
+	-g,  --gentle
 		do not enlarge small images and do not resize images to so very small size
