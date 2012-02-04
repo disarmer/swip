@@ -8,7 +8,7 @@ use strict;
 use Time::HiRes qw(time);
 
 my @results;
-for(0..12){
+for(0..16){
     `mkdir test; cp ./img/* test/;`;
     my $time_s=Time::HiRes::time;
     print "Starting test with $_ processes\n";
@@ -26,15 +26,20 @@ for(@results){
 __END__
 Results
 Concurrency		time
-1 			135.370 s
-2 			134.900 s
-3 			115.994 s
-4 			83.645 s
-5 			83.889 s
-6 			85.475 s
-7 			84.818 s
-8 			84.218 s
-9 			85.583 s
-10 			86.078 s
-11 			86.131 s
-12 			85.515 s
+0 			57.703 s
+1 			114.534 s
+2 			114.891 s
+3 			92.635 s
+4 			60.779 s
+5 			60.281 s
+6 			75.165 s
+7 			58.237 s
+8 			58.014 s
+9 			58.356 s
+10 			58.291 s
+11 			58.324 s
+12 			59.339 s
+13 			59.032 s
+14 			58.686 s
+15 			58.765 s
+16 			60.159 s
