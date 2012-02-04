@@ -12,7 +12,8 @@ for(0..16){
     `mkdir test; cp ./img/* test/;`;
     my $time_s=Time::HiRes::time;
     print "Starting test with $_ processes\n";
-    `cd test;/home/disarmer/sh/swip/swip.pl -q 90 -b 2 -s swip 6 ff08 -r 900 -t 2 -c $_`;
+    #`cd test;/home/disarmer/sh/swip/swip.pl -q 90 -b 2 -s swip 6 ff08 -r 900 -t 2 -c $_`;
+    `cd test;/home/disarmer/sh/swip/swip.pl -hi -c $_`;
     my $time_e=Time::HiRes::time-$time_s;
     push @results,[$_,$time_e];
     `rm test -r`;

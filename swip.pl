@@ -15,7 +15,8 @@ GetOptions(	"quality=i"	=>\$opts{'quality'},
 		"concurrent=i"	=>\$opts{'concurrent'},
 		"gentle"	=>\$opts{'gentle'},
 		"filter=i"	=>\$opts{'filter'},
-		"html=s{0,2}"	=>\@{$opts{'html'}},
+		"h|html=s{0,2}"	=>\@{$opts{'html'}},
+		"histogram"	=>\@{$opts{'histogram'}},
 		"index=s{0,2}"	=>\@{$opts{'index'}},
 		"thumb=i{0,2}"	=>\@{$opts{'thumb'}},
 		"resize=s"	=>\@{$opts{'resize'}},
@@ -29,7 +30,7 @@ $0=~m#(.*)/.*?#;
 my $root=$1;
 
 my @actions;
-for my $act( qw/binn resize erase_exif sign thumb index/){
+for my $act( qw/binn resize erase_exif sign thumb index histogram/){
 	if(defined @{$opts{$act}}){
 		#print $_,"\n";
 		push @actions,[$act,$opts{$act}];
@@ -59,6 +60,10 @@ if(defined @{$opts{'erase_exif'}} or defined @{$opts{'thumb'}} or defined @{$opt
 if(defined @{$opts{'sign'}}){
 	load Encode, 'decode_utf8';
 }
+if(defined @{$opts{'histogram'}}){
+	load Chart::Lines;
+}
+
 
 sub report{
 	my $arg=shift;
@@ -105,24 +110,38 @@ for(@files){
 	push @jobs,$_;
 }
 my $concurrent;
-if($opts{'concurrent'}){
+if(defined $opts{'concurrent'}){
 	$concurrent=abs int $opts{'concurrent'};
 }else{
 	$_=`free -m`;
 	m/Mem:\s+(\d+)/;
 	$concurrent=int (($1+600)/1024);
 }
-$concurrent||=1;$concurrent=12 if $concurrent>12;
+$concurrent=16 if $concurrent>16;
 &report("Run $concurrent concurrent processes",9);
 
 $SIG{'CHLD'} = sub{wait;&sig_child};
 &sig_child for(1..$concurrent);
 
 $SIG{'HUP'} = sub{warn $concurrent};
+
+if($concurrent eq 0){
+	while(my $file=shift @jobs){
+		for(@actions){
+			#warn Dumper $file,$_;
+			my($act,$ref)=@$_;
+			if($act eq 'index'){
+				$ref=[$dbh->clone];
+			}
+			local $_;
+			$main::{$act}($file,@$ref);
+		}
+	}
+}
+
 while($concurrent){
 	wait and $concurrent-- if $concurrent;
 }
-
 print "END\n";
 
 
@@ -135,6 +154,7 @@ sub sig_child{
 		if($act eq 'index'){
 			$ref=[$dbh->clone];
 		}
+		local $_;
 		$main::{$act}($file,@$ref);
 	}
 	exit;

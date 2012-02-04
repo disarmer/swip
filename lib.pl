@@ -3,11 +3,11 @@ use strict;
 use warnings;
 use Image::Magick;	#http://www.imagemagick.org/script/perl-magick.php
 use Date::Parse;
+use List::Util qw(max);
 
 $0=~m#(.*)/.*?#;
 my $root=$1;
 our ($dbh,$cwd,$quality,$gentle,$version);
-
 
 sub url_encode{
 	local @_=@_;
@@ -134,7 +134,7 @@ sub resize{
 	my $dest=$source;
 	my $target_size=shift||1600;
 
-	&report("resize. размер: $target_size",4);
+	&report("$source resize to: $target_size",4);
 	my ($image,$width,$height)=&load_image($source);
 
 	if($gentle){
@@ -205,6 +205,55 @@ sub erase_exif{
 	$exifTool->SetNewValue("*");
 	$exifTool->WriteInfo($dest);
 }
+sub histogram{
+	my $source=shift;
+	return if $source=~m/\.hist$/;
+	&report("histogram $source",4);
+	my ($image,$width,$height)=&load_image($source);
+	my @output;
+	#for($image->GetPixels(,'height'=>$height, 'width'=>$width,'normalize'=>1)){
+	for my $j(0..$height-1){
+		for my $i(0..$width-1){
+			my @pixel = $image->GetPixel('x'=>$i,'y'=>$j);
+			$output[0][$pixel[0]*255]++;
+			$output[1][$pixel[1]*255]++;
+			$output[2][$pixel[2]*255]++;
+			#my $val=sprintf("%.0f",($pixel[0]+$pixel[1]+$pixel[2])*255/3);
+			$output[3][($pixel[0]+$pixel[1]+$pixel[2])*255/3+0.5]++;
+		}
+	}
+	my $max=0;
+	for(my $index=0;$index<255;$index++){
+		$max=max($max,$output[0][$index]||0,$output[1][$index]||0,$output[2][$index]||0,$output[3][$index]||0);
+	}
+	my @data = ([0..255],$output[0],$output[1],$output[2],$output[3]);
+	my $obj;
+	$obj=Chart::Lines->new(888,300);
+	$obj->set('title' =>'',
+		'legend' => 'none',
+		'brush_size' => 3,
+		'x_ticks' => 'vertical',
+		'tick_len' => 2,
+		'max_val' => $max,
+		'min_val' => 0,
+		'skip_x_ticks' => 16,
+		'max_y_ticks' => 10,
+		'grid_lines' => 'true',
+		'grey_background' => 'false',
+		'graph_border' => 5,
+		'colors' => {'background' => [232,248,252],
+			'x_grid_lines' => [155,186,214],
+			'y_grid_lines' => [155,186,214],
+			'text' => [34,34,102],
+			'y_label' => [34,34,102],
+			'dataset0' => [255,0,0],
+			'dataset1' => [0,255,0],
+			'dataset2' => [0,0,255],
+			'dataset3' => [0,0,0]
+		}
+	);
+	$obj->png($source.".hist",\@data);
+}
 sub sign{	#Качество Масштаб_надписи Прозрачность Текст [угол]
 	my $source=shift;
 	my $dest=$source;#shift;
@@ -229,7 +278,7 @@ sub sign{	#Качество Масштаб_надписи Прозрачност
 	my $pointsize=(0.5+$scale/6)*$diag/50;
 	my $kerning=(0.5+$scale/6)*$diag/200;
 
-	&report("Цвет: $color, пишем текст: $string; размер шрифта: $pointsize",4);
+	&report("sign $source : $string",4);
 
 	my $label=Image::Magick->new('size'=>&get_font_geometry($pointsize,$font,$string));
 	$label->Read('xc:transparent');
