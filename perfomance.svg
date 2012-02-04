@@ -171,9 +171,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="100.40626"
-     inkscape:cy="88.979388"
+     inkscape:zoom="2.8"
+     inkscape:cx="122.20642"
+     inkscape:cy="105.77814"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -914,27 +914,27 @@
        sodipodi:cy="14.944136"
        sodipodi:rx="10.101525"
        sodipodi:ry="10.101525"
-       d="m -22.475893,25.045661 c -5.578918,0 -10.101525,-4.522607 -10.101525,-10.101525 0,0 0,-1e-6 0,-1e-6 l 10.101525,1e-6 z"
-       transform="matrix(-0.62500001,0,0,0.62500001,150.35489,925.08679)"
+       d="M -22.475893,25.045661 A 10.101525,10.101525 0 0 1 -32.577418,14.944135 l 10.101525,1e-6 z"
+       transform="matrix(-0.62500001,0,0,0.62500001,155.95257,923.0221)"
        sodipodi:start="1.5707963"
        sodipodi:end="3.1415927" />
     <text
        xml:space="preserve"
        style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
-       x="172.35873"
-       y="939.53156"
+       x="177.95641"
+       y="937.46686"
        id="text3912"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3914"
-         x="172.35873"
-         y="939.53156"
+         x="177.95641"
+         y="937.46686"
          style="font-size:6px;text-align:start;text-anchor:start">typical using</tspan></text>
     <path
        sodipodi:end="3.1415927"
        sodipodi:start="1.5707963"
-       transform="matrix(-0.62500001,0,0,0.62500001,150.35489,933.67309)"
-       d="m -22.475893,25.045661 c -5.578918,0 -10.101525,-4.522607 -10.101525,-10.101525 0,0 0,-1e-6 0,-1e-6 l 10.101525,1e-6 z"
+       transform="matrix(-0.62500001,0,0,0.62500001,155.95257,933.0221)"
+       d="M -22.475893,25.045661 A 10.101525,10.101525 0 0 1 -32.577418,14.944135 l 10.101525,1e-6 z"
        sodipodi:ry="10.101525"
        sodipodi:rx="10.101525"
        sodipodi:cy="14.944136"
@@ -945,14 +945,45 @@
     <text
        sodipodi:linespacing="125%"
        id="text3918"
-       y="948.11786"
-       x="172.35873"
+       y="947.46686"
+       x="177.95642"
        style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
        xml:space="preserve"><tspan
          style="font-size:6px;text-align:start;text-anchor:start"
-         y="948.11786"
-         x="172.35873"
+         y="947.46686"
+         x="177.95642"
          id="tspan3920"
          sodipodi:role="line">building histograms</tspan></text>
+    <path
+       inkscape:label="#path2985"
+       sodipodi:nodetypes="ccccccccccccccccc"
+       inkscape:connector-curvature="0"
+       id="path3107"
+       d="m 0,970.99118 10,-16.313 10,0.272 10,-1.18 10,4.854 10,3.141 10,1.974 10,30.954 10,-19.702 10,-6.379 10,24.738 10,8.81802 10,-9.05802 10,11.57202 10,3.105 10,-0.299 10,-8.38002"
+       style="fill:none;stroke:#008000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#008000;fill-opacity:1;stroke:none"
+       id="path3109"
+       sodipodi:cx="-22.475893"
+       sodipodi:cy="14.944136"
+       sodipodi:rx="10.101525"
+       sodipodi:ry="10.101525"
+       d="M -22.475893,25.045661 A 10.101525,10.101525 0 0 1 -32.577418,14.944135 l 10.101525,1e-6 z"
+       transform="matrix(-0.62500001,0,0,0.62500001,155.95257,943.0221)"
+       sodipodi:start="1.5707963"
+       sodipodi:end="3.1415927" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.00084877px;font-style:normal;font-variant:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Gothic L;-inkscape-font-specification:URW Gothic L Book"
+       x="177.95641"
+       y="957.46686"
+       id="text3111"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3113"
+         x="177.95641"
+         y="957.46686"
+         style="font-size:6px;text-align:start;text-anchor:start">binning</tspan></text>
   </g>
 </svg>
