@@ -61,11 +61,6 @@ if(defined @{$opts{'index'}}){
 	load Date::Parse;
 	load Digest::MD5, 'md5_hex';
 }
-
-if(defined @{$opts{'thumb'}}){
-	load File::Path,'mkpath';
-	load File::Basename,'dirname';
-}
 if(defined @{$opts{'erase_exif'}} or defined @{$opts{'thumb'}} or defined @{$opts{'index'}}){
 	load Image::ExifTool, 'ImageInfo',':Public';
 }
@@ -117,10 +112,7 @@ if(defined @{$opts{'index'}}){
 	$dbh=&photo_db_connect(@{$opts{'index'}});
 	&photo_db_destroy($dbh);
 }
-my @jobs;
-for(@files){
-	push @jobs,$_;
-}
+
 my $concurrent;
 if(defined $opts{'concurrent'}){
 	$concurrent=abs int $opts{'concurrent'};
@@ -138,7 +130,7 @@ $SIG{'CHLD'} = sub{wait;&sig_child};
 $SIG{'HUP'} = sub{warn $concurrent};
 
 if($concurrent eq 0){
-	while(my $file=shift @jobs){
+	while(my $file=shift @files){
 		for(@actions){
 			#warn Dumper $file,$_;
 			my($act,$ref)=@$_;
@@ -158,7 +150,7 @@ print "END\n";
 
 
 sub sig_child{
-	my $file=shift @jobs or return;
+	my $file=shift @files or return;
 	$concurrent++;
 	fork and return;
 	for(@actions){

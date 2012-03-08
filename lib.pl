@@ -153,7 +153,7 @@ sub thumb{
 	return if $source=~m#/thumbs/#;
 	$dest=~s#(.*)/(.*)#$1/thumbs/$2#;
 	$dest.='.thumb';
-	mkpath("$1/thumbs/", 0755);
+	mkdir "$1/thumbs/";
 
 	my $square=shift||0;
 	my $target_size=shift||150;
@@ -176,7 +176,7 @@ sub thumb{
 			my $empty=Image::Magick->new('size'=>$target_size);
 			$empty->Read('xc:transparent');
 			my ($mask,undef,undef)=&load_image("$root/misc/thumb_mask.png");
-			$mask->Resize('geometry'=>$target_size."x".$target_size);
+		$mask->Resize('geometry'=>$target_size."x".$target_size);
 			$bg->Composite('image'=>$mask, 'compose'=>'CopyOpacity', 'gravity'=>'Center');
 		}else{
 			$bg->UnsharpMask('radius'=>1.5, 'sigma'=>1.5, 'amount'=>1.2, 'threshold'=>0);
@@ -192,6 +192,7 @@ sub thumb{
 	if($square==2){
 		$bg->Write("png:$dest");
 	}else{
+		$image->Set('quality'=>$quality);
 		$bg->Write("jpg:$dest");
 		&erase_exif($dest);
 	}
@@ -360,11 +361,10 @@ sub index{
 	&report("$directory\t\t$filename",7);#sleep 1;return;
 	my $info=ImageInfo($file);
 
-	my $time_mod=str2time($$info{"FileModifyDate"});
-	my $time=(str2time($$info{"DateTimeOriginal"}))||$time_mod;
+	my $time_mod=$$info{"FileModifyDate"};
+	my $time=$$info{"DateTimeOriginal"}||$time_mod;
 
-	$time=localtime($time);
-	$time_mod=localtime($time_mod);
+	map {s/:(\d+?):/-$1-/} $time_mod,$time;
 
 	my $iso=int ($$info{"ISO"}||'0');
 	my $aperture=0+($$info{"Aperture"}||'0');
