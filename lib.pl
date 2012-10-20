@@ -6,7 +6,7 @@ use List::Util qw(max);
 
 $0=~m#(.*)/.*?#;
 my $root=$1;
-our ($dbh,$cwd,$quality,$gentle,$version);
+our ($dbh,$quality,$gentle,$cwd);
 
 sub url_encode{
 	local @_=@_;
@@ -46,7 +46,8 @@ sub load_image{
 	return ($image,$width,$height);
 }
 sub html_write{
-	my ($ref,$html_album_desc,$num_per_page)=@_;
+	my ($ref,$html_album_desc,$num_per_page,$sprite_num)=@_;
+	#warn $sprite_num;
 	$num_per_page||=20;
 	my @images_for_html=@$ref;
 	@images_for_html=grep{! m#/thumbs/#}sort @images_for_html;
@@ -55,17 +56,18 @@ sub html_write{
 	$_=$html_album_desc;s/'/&#39;/g;
 	$html_album_desc=&html_entity($html_album_desc);
 
+	my $ver=VERSION;
 	my $html_head_str="<!DOCTYPE html><html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
-	<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
 	<title>$html_album_desc</title>
 	<meta name='description' content='$_'/>
-	<meta name='generator' content='swip v$version'/>
+	<meta name='generator' content='swip v$ver'/>
 	<meta name='keywords' content='foto, photo, gallery, photos, images'/>
 	<link rel='icon' href='/favicon.ico' type='image/x-icon'/>
-	<script type='text/javascript' src='/js/iLoad/iLoad.js'></script>
+	<script async='async' defer='defer' type='text/javascript' src='/js/iLoad/iLoad.js'></script>
 	<style type='text/css'>
-		html{background:url(/js/iLoad/film.png) 100% 0 repeat-y,url(/js/iLoad/film.png) 0 0 repeat-y;background-color:#000;}body{padding:0 80px;text-align:center;}a img{margin-bottom:30px}#photos img{width:90%;margin:2em 0}div#nav{position:fixed;bottom:0;right:0;margin:0;padding:6px 20px 6px 20px;background-color:#fff;border-top:1px solid #000;border-left:1px solid #000;border-radius:20px;-moz-border-radius:20px;-webkit-borderd-radius:20px;}div#nav a{float:left;background-color:#ccc;padding:0 10px;margin:0 7px;border:1px solid #000;text-decoration:none;font-weight:bold;}div#nav a:hover{background-color:#cc0;}
+		html{background:url(/js/iLoad/film.png) 100% 0 repeat-y,url(/js/iLoad/film.png) 0 0 repeat-y;background-color:#000;}body{padding:0 80px;text-align:center;}a {display:inline-block;margin-bottom:30px}#photos img{width:90%;margin:2em 0}div#nav{position:fixed;bottom:0;right:0;margin:0;padding:6px 20px 6px 20px;background-color:#fff;border-top:1px solid #000;border-left:1px solid #000;border-radius:20px;-moz-border-radius:20px;-webkit-borderd-radius:20px;}div#nav a{float:left;background-color:#ccc;padding:0 10px;margin:0 7px;border:1px solid #000;text-decoration:none;font-weight:bold;}div#nav a:hover{background-color:#cc0;}
 	</style>
 </head><body>";
 	for(my $file_num=1;$file_num<1+($#images_for_html+1)/$num_per_page;$file_num++){
@@ -79,7 +81,7 @@ sub html_write{
 		$out.="</div><div id='photos'>";
 		for my $href_num(0..$num_per_page-1){
 			my $href=$images_for_html[$href_num+($file_num-1)*$num_per_page]||last;
-			$href=~s/\Q$cwd\E//;
+			$href=~s#\Q$cwd/\E##;
 			$href=&url_encode($href);
 			$out.="<img alt='photo' src='$href' onclick='this.style=\"display:none\";'/>";
 		}
@@ -88,13 +90,31 @@ sub html_write{
 	}
 	my $out=$html_head_str;
 	$out.="<div id='thumbs'>";
-	for(my $file_num=0;$file_num<$#images_for_html+1;$file_num++){
+
+	my $spr;
+	if($sprite_num){
+		$spr=new mk::sprite('out'=>"$cwd/thumbs/spr",'ref'=>"thumbs/spr",'cache'=>0,'number'=>$sprite_num);
+	}
+	for(my $file_num=0;$file_num<scalar @images_for_html;$file_num++){
 		my $href=$images_for_html[$file_num];
-		$href=~s/\Q$cwd\E//;
+
+		$href=~s#\Q$cwd/\E##;
 		my $thumb=$href;
 		$thumb=~s#(.*)/(.*)#$1/thumbs/$2# or $thumb="thumbs/$thumb";
-		($href,$thumb)=&url_encode($href,$thumb);
-		$out.="<a href='$href' rel='iLoad|ph'><img alt='photo' src='$thumb.thumb'/></a>";
+
+		my $img;
+		$href=&url_encode($href);
+		if($sprite_num){
+			$img=$spr->add('img'=>"$cwd/$thumb.thumb",'title'=>$html_album_desc,'class'=>'spr');
+			#print Dumper $spr;
+		}else{
+			$thumb=&url_encode($thumb);
+			$img="<img alt='photo' src='$thumb.thumb'/>";
+		}
+		$out.="<a href='$href' data-rel='iLoad|ph'>$img</a>";
+	}
+	if($sprite_num){
+		$spr->save;
 	}
 	$out.="</div></body></html>";
 	$out=~tr/\n\t\r//d;
@@ -125,6 +145,20 @@ sub binn{
 	$image->Resize('filter'=>'box','geometry'=>'geometry', 'width'=>$new_width,'quality'=>$quality, 'height'=>$new_height);
 	$image->Crop('x'=>0, 'y'=>0);#Задаем откуда будем резать
 	$image->Crop($new_width*$bin_size."x".$new_height*$bin_size);#С того места вырезаем
+	$image->Set('quality'=>$quality);
+	$image->Write($dest);
+}
+sub trim{
+	my $source=shift;
+	my $dest=$source;
+	&report("$source trim",4);
+	my ($image,$width,$height)=&load_image($source);
+
+	$image->Trim;
+	@_=$image->Get('width', 'height');
+	unless($width>$_[0]||$height>$_[0]){
+		return;
+	}
 	$image->Set('quality'=>$quality);
 	$image->Write($dest);
 }
@@ -166,8 +200,10 @@ sub thumb{
 		$bg->Crop('x'=>($width-$min_geom)/2, 'y'=>0);
 		$bg->Crop($min_geom+(($width-$min_geom)/2)."x".$min_geom);
 	}else{
-		$bg->Crop('x'=>0, 'y'=>($height-$min_geom)/2);
-		$bg->Crop($min_geom."x".($min_geom+($height-$min_geom)/2));
+		#$bg->Crop('x'=>0, 'y'=>($height-$min_geom)/2);
+		#$bg->Crop($min_geom."x".($min_geom+($height-$min_geom)/2));
+		$bg->Crop('x'=>0, 'y'=>0);
+		$bg->Crop($min_geom."x".$min_geom);
 	}
 	$bg->Resize('geometry'=>$target_size."x".$target_size);
 
@@ -176,7 +212,7 @@ sub thumb{
 			my $empty=Image::Magick->new('size'=>$target_size);
 			$empty->Read('xc:transparent');
 			my ($mask,undef,undef)=&load_image("$root/misc/thumb_mask.png");
-		$mask->Resize('geometry'=>$target_size."x".$target_size);
+			$mask->Resize('geometry'=>$target_size."x".$target_size);
 			$bg->Composite('image'=>$mask, 'compose'=>'CopyOpacity', 'gravity'=>'Center');
 		}else{
 			$bg->UnsharpMask('radius'=>1.5, 'sigma'=>1.5, 'amount'=>1.2, 'threshold'=>0);
@@ -258,7 +294,7 @@ sub sign{	#Качество Масштаб_надписи Прозрачност
 	my $source=shift;
 	my $dest=$source;#shift;
 	my $string=shift||"disarmer.ru";
-	my $scale=shift||4;
+	my $scale=shift||2.5;
 	my $color=shift||"ffffff";
 	$color="#$color" unless $color=~m/#/;
 	my $angle=shift||270;
@@ -333,7 +369,6 @@ sub photo_db_destroy{
 	my $sth=$dbh->prepare("drop table if exists photo;");
 	$sth->execute;
 	$sth=$dbh->prepare("create table photo(
-		id serial not null,
 		dir varchar(500),
 		filename varchar(500),
 		size_x smallint,
@@ -342,18 +377,21 @@ sub photo_db_destroy{
 		aperture real,
 		speed real,
 		fov real,
-		model varchar(20),
+		model varchar(64),
 		size integer,
 		time timestamp(0),
 		time_mod timestamp(0),
 		md5 varchar(32),
-		CONSTRAINT id PRIMARY KEY (id)
+		PRIMARY KEY (md5)
 	);");
 	$sth->execute;
 }
 sub index{
 	my $file=$_=shift;
-	my $dbh=shift||die $!;#||&photo_db_connect();
+	my $dbh=shift||die;# $!;#||&photo_db_connect();
+
+	$dbh=$dbh->clone;
+
 	s/\Q$cwd\E//;
 	$_='./'.$_ unless m#/#;
 	m#(.*)/(.*)#;
@@ -361,26 +399,29 @@ sub index{
 	&report("$directory\t\t$filename",7);#sleep 1;return;
 	my $info=ImageInfo($file);
 
+	#die Dumper $info;
 	my $time_mod=$$info{"FileModifyDate"};
 	my $time=$$info{"DateTimeOriginal"}||$time_mod;
 
-	map {s/:(\d+?):/-$1-/} $time_mod,$time;
+	map {s/(\d+):(\d+?):/$1-$2-/;$_=undef unless int $1} $time_mod,$time;
 
-	my $iso=int ($$info{"ISO"}||'0');
-	my $aperture=0+($$info{"Aperture"}||'0');
+	my $iso=int ($$info{"ISO"}||0);
+	my $aperture=0+($$info{"Aperture"}||0);
 	my $shutter_speed=1/eval($$info{"ExposureTime"}||99999999);
-	my $fov=$$info{"FOV"}||'0';
+	my $fov=$$info{"FOV"}||0;
 	$fov=0+(split ' ',$fov)[0];
 	my $model=$$info{"Model"}||"unknown";
-	$model=substr $model,0,20;
+	$model=substr $model,0,64;
 
-	my (undef,$size_x,$size_y)=&load_image($file)||warn "$file have wrong format!"&&return;
+	#my (undef,$size_x,$size_y)=&load_image($file)||warn "$file have wrong format!"&&return;
+	my ($size_x,$size_y)=($$info{"ImageWidth"},$$info{"ImageHeight"});
 
 	my $md5=md5_hex($file);
 	my $filesize=-s "$file";
 	#my @stat=stat($file);
 
-	my $sthi=$dbh->prepare_cached("insert into photo (dir, filename,size_x,size_y, size, md5,time,time_mod,iso,aperture,speed,fov,model) values (?,?,?,?,?,?,?,?,?,?,?,?,?);");
+	my $sthi=$dbh->prepare("insert into photo (dir, filename,size_x,size_y, size, md5,time,time_mod,iso,aperture,speed,fov,model) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
 	$sthi->execute($directory,$filename,$size_x,$size_y,$filesize,$md5,$time,$time_mod,$iso,$aperture,$shutter_speed,$fov,$model)||die $!;
 }
 1

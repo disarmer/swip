@@ -8,21 +8,26 @@ use Time::HiRes qw(time);
 use Data::Dumper;
 $0=~m#(.*)/.*?#;
 my $root=$1;
-my $max_forks=16;
+
+use constant {
+    MAX_FORKS=>16,
+    IMG_NUM=>50
+};
 
 my %results;
-my %modes=(	'typical using'	=>'-q 90 -b 2 -s swip 6 ff08 -r 900 -t 2',
-		'signing'	=>'-s swip 6 ff08',
-		'resizing'	=>'-r 900 -q 75',
-	    	'binning'	=>'-b 3 -q 75',
+my %modes=(	#'typical using'	=>'-q 90 -b 2 -s swip 6 ff08 -r 900 -t 2',
+		#'signing'	=>'-s swip 6 ff08',
+		#'resizing'	=>'-r 900 -q 75',
+	    	#'binning'	=>'-b 3 -q 75',
 		#'histogram'	=>'-hi',
-	    	'thumbnails'	=>'-t 2');
+	    	#'thumbnails'	=>'-t 2',
+		'index'		=>'-i');
 for my $mode(keys %modes){
     my @results;
     print '='x40," Testing mode: $mode ",'='x40,"\n";
-    for my $con(0..$max_forks){
+    for my $con(0..MAX_FORKS){
 	mkdir "$root/test";
-	for(1..30){
+	for(1..IMG_NUM){
 	    `cp "$root/example.jpg" "$root/test/example_$_.jpg"`;
 	}
 	print "Starting test with $con processes\n";
@@ -43,7 +48,7 @@ rmtree "$root/test";
 
 #build graph
 use Chart::Lines;
-my @data = ([0..$max_forks]);
+my @data = ([0..MAX_FORKS]);
 my @legends=keys %results;
 for(@legends){
     push @data,$results{$_};
