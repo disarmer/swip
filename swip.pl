@@ -5,8 +5,7 @@ use File::Find;
 use Data::Dumper;
 use Module::Load;
 use Term::ANSIColor qw(:constants);
-our $cwd=cwd.'/';
-our $version=0.1;
+use constant {VERSION=>0.121};
 
 use Getopt::Long;
 my %opts;
@@ -14,25 +13,30 @@ my (@resize,@thumb,@html,@binn,@erase_exif,@sign,$filter);
 GetOptions(	"quality=i"	=>\$opts{'quality'},
 		"concurrent=i"	=>\$opts{'concurrent'},
 		"gentle"	=>\$opts{'gentle'},
+		"depth=i"	=>\$opts{'depth'},
 		"filter=i"	=>\$opts{'filter'},
 		"st|selftest"	=>\$opts{'selftest'},
-		"h|html=s{0,2}"	=>\@{$opts{'html'}},
+		"h|html=s{0,3}"	=>\@{$opts{'html'}},
 		"histogram"	=>\@{$opts{'histogram'}},
 		"index=s{0,2}"	=>\@{$opts{'index'}},
-		"thumb=i{0,2}"	=>\@{$opts{'thumb'}},
+		"t|thumb=i{0,2}"=>\@{$opts{'thumb'}},
+		"tr|trim"	=>\@{$opts{'trim'}},
 		"resize=s"	=>\@{$opts{'resize'}},
 		"binn=i"	=>\@{$opts{'binn'}},
 		"erase_exif"	=>\@{$opts{'erase_exif'}},
 		"s|sign=s{0,4}"	=>\@{$opts{'sign'}});
 
-our $quality = $opts{'quality'}||90;
+our $cwd=cwd;
 our $gentle = $opts{'gentle'};
+our $quality =$opts{'quality'}?abs int $opts{'quality'}:90;
+$opts{'depth'}=$opts{'depth'}?abs int $opts{'depth'}:0;
+
 $0=~m#(.*)/.*?#;
 my $root=$1;
 
 my @actions;
-for my $act( qw/binn resize erase_exif sign thumb index histogram/){
-	if(defined @{$opts{$act}}){
+for my $act( qw/binn resize erase_exif trim sign thumb index histogram/){
+	if(@{$opts{$act}}){
 		push @actions,[$act,$opts{$act}];
 	}
 }
@@ -51,26 +55,28 @@ if(defined $opts{'selftest'}){
 	}
 	exit;
 }
-unless(@actions or defined @{$opts{'html'}}){
+unless(@actions or @{$opts{'html'}}){
 	for(<DATA>){print}
 	print "\n\n";
 	exit;
 }
-if(defined @{$opts{'index'}}){
+if(@{$opts{'index'}}){
 	load DBI;
-	load Date::Parse;
+	#load Date::Parse;
 	load Digest::MD5, 'md5_hex';
 }
-if(defined @{$opts{'erase_exif'}} or defined @{$opts{'thumb'}} or defined @{$opts{'index'}}){
+if(@{$opts{'erase_exif'}} or @{$opts{'thumb'}} or @{$opts{'index'}}){
 	load Image::ExifTool, 'ImageInfo',':Public';
 }
-if(defined @{$opts{'sign'}}){
+if(@{$opts{'sign'}}){
 	load Encode, 'decode_utf8';
 }
-if(defined @{$opts{'histogram'}}){
+if(@{$opts{'histogram'}}){
 	load Chart::Lines;
 }
-
+if(@{$opts{'html'}} and scalar @{$opts{'html'}}>2){
+	require "$root/sprite.pm";
+}
 
 sub report{
 	my $arg=shift;
@@ -88,12 +94,16 @@ sub report{
 	print $_,$arg,RESET,"\n";
 }
 
+$opts{'depth'}+=(cwd=~tr!/!!) if $opts{'depth'};
 find({'wanted'=>\&found,'follow'=> 1},cwd);
 my @files;
+
 sub found{
 	$_=$File::Find::name;
-	return unless -f $_;
+	
 	return unless m/\.(jpg|bmp|gif|png)/i;
+	return unless -f $_;
+	return if $opts{'depth'} and tr!/!! > $opts{'depth'};
 	push @files, $_;
 }
 
@@ -103,12 +113,12 @@ if($opts{'filter'}){
 
 require "$root/lib.pl";
 
-if(defined @{$opts{'html'}}){
+if(@{$opts{'html'}}){
 	&html_write(\@files,@{$opts{'html'}});
 }
 exit unless @actions;
 my $dbh;
-if(defined @{$opts{'index'}}){
+if(@{$opts{'index'}}){
 	$dbh=&photo_db_connect(@{$opts{'index'}});
 	&photo_db_destroy($dbh);
 }
@@ -121,26 +131,28 @@ if(defined $opts{'concurrent'}){
 	m/Mem:\s+(\d+)/;
 	$concurrent=int (($1+600)/1024);
 }
-$concurrent=16 if $concurrent>16;
+$concurrent=32 if $concurrent>32;
+my $processes=$concurrent;
 &report("Run $concurrent concurrent processes",9);
 
 $SIG{'CHLD'} = sub{wait;&sig_child};
-&sig_child for(1..$concurrent);
-
 $SIG{'HUP'} = sub{warn $concurrent};
 
+my $counter=-1;
 if($concurrent eq 0){
 	while(my $file=shift @files){
 		for(@actions){
 			#warn Dumper $file,$_;
 			my($act,$ref)=@$_;
 			if($act eq 'index'){
-				$ref=[$dbh->clone];
+				$ref=[$dbh];
 			}
 			local $_;
 			$main::{$act}($file,@$ref);
 		}
 	}
+}else{
+	&sig_child for(1..$concurrent);
 }
 
 while($concurrent){
@@ -148,17 +160,24 @@ while($concurrent){
 }
 print "END\n";
 
-
 sub sig_child{
 	my $file=shift @files or return;
+
+	$counter=++$counter % $processes;
+	#warn "ss ",$counter;
+
 	$concurrent++;
 	fork and return;
 	for(@actions){
 		my($act,$ref)=@$_;
 		if($act eq 'index'){
-			$ref=[$dbh->clone];
+			#$ref=[$dbh->clone];
+			$ref=[$dbh];
+			#warn $dbh[$counter];
+			#$ref=[$dbh[$counter]];
 		}
 		local $_;
+		#sleep 1;
 		$main::{$act}($file,@$ref);
 	}
 	exit;
@@ -170,6 +189,9 @@ SWIP - simple web image processor
 	-q,  --quality
 		Output jpeg quality(1-100), default 92
 
+	-d,  --depth	DEPTH
+		maximal depth for find
+		
 	-b,  --binn	FACTOR
 		reduce images multiple value of FACTOR with box filter
 
@@ -179,10 +201,13 @@ SWIP - simple web image processor
 	-t,  --thumb	SQUARE	SIZE
 		make thumbnails of images
 
+	-tr,  --trim
+		auto trim image borders
+
 	-e,  --erase_exif
 		erase EXIF info from all images, reducing their size
 
-	-h,  --html	NAME	IMAGES_PER_PAGE
+	-h,  --html	NAME	IMAGES_PER_PAGE		SPRITE_NUM
 		write html pages for images with defined album name
 
 	-hi, --histogram
