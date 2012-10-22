@@ -16,12 +16,13 @@ use constant {
 
 my %results;
 my %modes=(	#'typical using'	=>'-q 90 -b 2 -s swip 6 ff08 -r 900 -t 2',
-		#'signing'	=>'-s swip 6 ff08',
-		#'resizing'	=>'-r 900 -q 75',
-	    	#'binning'	=>'-b 3 -q 75',
+		'signing'	=>'-s swip 6 ff08',
+		'resizing'	=>'-r 900 -q 75',
+	    'binning'	=>'-b 3 -q 75',
 		#'histogram'	=>'-hi',
-	    	#'thumbnails'	=>'-t 2',
-		'index'		=>'-i');
+	    'thumbnails'	=>'-t 2',
+		#'index'		=>'-i'
+);
 for my $mode(keys %modes){
     my @results;
     print '='x40," Testing mode: $mode ",'='x40,"\n";

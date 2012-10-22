@@ -7,6 +7,14 @@ use List::Util qw(max);
 $0=~m#(.*)/.*?#;
 my $root=$1;
 our ($dbh,$quality,$gentle,$cwd);
+my %img_cache;
+
+END{
+	#print Dumper \%img_cache;
+	for(keys %img_cache){
+		$img_cache{$_}[0]->Write($_);
+	}
+}
 
 sub url_encode{
 	local @_=@_;
@@ -38,12 +46,20 @@ sub str_to_file{
 }
 sub load_image{
 	my $source=shift;
+	return @{$img_cache{$source}} if exists $img_cache{$source};
 	my $image=Image::Magick->new();
 	my $w=$image->Read($source);
 	warn $w if $w;
 	exit if $w=~ m/^Exception/;
 	my ($width, $height)=$image->Get('width', 'height');
+	$img_cache{$source}=[$image,$width,$height];
 	return ($image,$width,$height);
+}
+sub write_image{
+	my ($image,$source)=@_;
+	#$image->Write($source);
+	my ($width, $height)=$image->Get('width', 'height');
+	$img_cache{$source}=[$image,$width,$height];
 }
 sub html_write{
 	my ($ref,$html_album_desc,$num_per_page,$sprite_num)=@_;
@@ -146,7 +162,8 @@ sub binn{
 	$image->Crop('x'=>0, 'y'=>0);#Задаем откуда будем резать
 	$image->Crop($new_width*$bin_size."x".$new_height*$bin_size);#С того места вырезаем
 	$image->Set('quality'=>$quality);
-	$image->Write($dest);
+	#$image->Write($dest);
+	&write_image($image,$dest);
 }
 sub trim{
 	my $source=shift;
@@ -160,7 +177,8 @@ sub trim{
 		return;
 	}
 	$image->Set('quality'=>$quality);
-	$image->Write($dest);
+	#$image->Write($dest);
+	&write_image($image,$dest);
 }
 sub resize{
 	my $source=shift;
@@ -179,7 +197,8 @@ sub resize{
 	}
 	$image->Resize('geometry'=>$target_size."x".$target_size,'quality'=>$quality);
 	$image->Set('quality'=>$quality);
-	$image->Write($dest);
+	#$image->Write($dest);
+	&write_image($image,$dest);
 }
 sub thumb{
 	my $source=shift;
@@ -333,8 +352,9 @@ sub sign{	#Качество Масштаб_надписи Прозрачност
 	$image->Composite('image'=>$label,'gravity'=>"SouthEast",'x'=>0,'y'=>$pointsize/2, 'compose'=>'dissolve', 'tile'=>"False");
 
 	$image->Set('quality'=>$quality);
-	$image->Write($dest);
-	undef $image;
+	#$image->Write($dest);
+	&write_image($image,$dest);
+	#undef $image;
 }
 sub get_font_geometry{#Тогда можно через QueryFontMetrics узнать информацию о графическом представлении строки и потом на её основе вычислить координаты.
 	my $pointsize=shift;
