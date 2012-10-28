@@ -11,7 +11,9 @@ my %img_cache;
 
 END{
 	#print Dumper \%img_cache;
+	delete $img_cache{"$root/misc/thumb_mask.png"};
 	for(keys %img_cache){
+		next unless $img_cache{$_}[0]->Get('taint');
 		$img_cache{$_}[0]->Write($_);
 	}
 }
@@ -46,7 +48,15 @@ sub str_to_file{
 }
 sub load_image{
 	my $source=shift;
-	return @{$img_cache{$source}} if exists $img_cache{$source};
+	#print Dumper $img_cache{$source} if exists $img_cache{$source};
+	
+	if(exists $img_cache{$source}){
+		$_=$img_cache{$source}->[0];
+		#print Dumper $_;
+		#$_->Crop('0x0+0+0');
+		#print Dumper $_->geometry();#$_->SetImagePage(0,0,0,0);
+		return @{$img_cache{$source}};
+	}	
 	my $image=Image::Magick->new();
 	my $w=$image->Read($source);
 	warn $w if $w;
@@ -212,24 +222,21 @@ sub thumb{
 	my $target_size=shift||150;
 
 	&report("thumb size: $target_size $dest $square",4);
+	delete $img_cache{$source}; #FIXME - crop misunderstood
 	my ($image,$width,$height)=&load_image($source);
+	
 	my $bg=$image->clone();
 	my $min_geom=$width>$height?$height:$width; #minimal
 	if($width>$height){
 		$bg->Crop('x'=>($width-$min_geom)/2, 'y'=>0);
 		$bg->Crop($min_geom+(($width-$min_geom)/2)."x".$min_geom);
 	}else{
-		#$bg->Crop('x'=>0, 'y'=>($height-$min_geom)/2);
-		#$bg->Crop($min_geom."x".($min_geom+($height-$min_geom)/2));
-		$bg->Crop('x'=>0, 'y'=>0);
-		$bg->Crop($min_geom."x".$min_geom);
+		$bg->Crop('geometry'=>$min_geom."x".$min_geom."+0+0");		
 	}
 	$bg->Resize('geometry'=>$target_size."x".$target_size);
 
 	if($square){
 		if($square==2){
-			my $empty=Image::Magick->new('size'=>$target_size);
-			$empty->Read('xc:transparent');
 			my ($mask,undef,undef)=&load_image("$root/misc/thumb_mask.png");
 			$mask->Resize('geometry'=>$target_size."x".$target_size);
 			$bg->Composite('image'=>$mask, 'compose'=>'CopyOpacity', 'gravity'=>'Center');
@@ -247,7 +254,6 @@ sub thumb{
 	if($square==2){
 		$bg->Write("png:$dest");
 	}else{
-		$image->Set('quality'=>$quality);
 		$bg->Write("jpg:$dest");
 		&erase_exif($dest);
 	}

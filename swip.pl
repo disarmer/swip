@@ -116,6 +116,7 @@ require "$root/lib.pl";
 if(@{$opts{'html'}}){
 	&html_write(\@files,@{$opts{'html'}});
 }
+#die Dumper \%opts;
 exit unless @actions;
 my $dbh;
 if(@{$opts{'index'}}){
